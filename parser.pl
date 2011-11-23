@@ -30,11 +30,22 @@ sub parse_note
 		my $note = $_;
 		return unless -f $note;
 		return unless $note =~ /.note$/;
-		
+
+        # Go through the note file and cleanup the generated links tags
+        # otherwise they will show up ugly in the result
+        open (TMP_FILE, "$note");
+        @lines=<TMP_FILE>;
+        close TMP_FILE;
+        foreach ( @lines )
+            {
+                s/\<link\:url\>//g;
+                s/\<\/link\:url\>//g;
+            }
+	
 		# Create XML object
 		my $xml = new XML::Simple;
 		# Read XML file
-		my $data = $xml->XMLin("$note");
+		my $data = $xml->XMLin("@lines");
 
 		# Define title and clean it up as it will be used as a file name
 		my $title = "$data->{'title'}";
