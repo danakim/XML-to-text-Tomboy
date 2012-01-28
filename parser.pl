@@ -7,9 +7,18 @@ use File::Find;
 use Getopt::Long;
 use Cwd 'abs_path';
 
+# Check if any arguments were given to the script
+if (scalar(@ARGV) == 0) { die("\nOptions:\n\n-i --input <folder>: The input folder with the tomboy notes to be converted.\n-o --output <folder>: Destination folder to which the plain text notes will be written to.\n"); }
+
 # Get the command line options of input and output folder
 GetOptions ('input|i=s'  => \$tomboy_folder,
 			'output|o=s' => \$output_folder);
+
+# Check if both options are passed
+if (!$tomboy_folder or !$output_folder) { 
+    print("\nBoth input folder and output folder must be passed to the script!\n");
+    exit 255;
+}
 
 # Cleanup the folders and transform them to absolute paths
 $tomboy_folder = abs_path($tomboy_folder);

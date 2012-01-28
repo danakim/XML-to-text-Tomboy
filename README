@@ -1,1 +1,6 @@
 A simple Perl script to convert Tomboy notes from the default XML format to plain text - from the command line!
+
+Options:
+
+-i --input <folder>: The input folder with the tomboy notes to be converted.
+-o --output <folder>: Destination folder to which the plain text notes will be written to.
